@@ -60,6 +60,9 @@ async function startServer() {
   // Check if the server is sending messages properly
   app.get("/ping", (req, res) => res.send("Pong"));
 
+  app.get("/", (req, res) => res.send("Server Running"));
+
+
   // Start server @ port 3001 or the defined port in environment variables
   const port = process.env.PORT || 3002;
   app.listen(port, () =>
