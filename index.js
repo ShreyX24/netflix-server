@@ -10,6 +10,8 @@ require("dotenv").config();
 const schMovieDetails = require("./schemas/movies/schMovDetails.js");
 const schMovNowPlaying = require("./schemas/movies/schMovNowPlaying.js");
 const schMovPopular = require("./schemas/movies/schMovPopular.js");
+const schMovFetchImages = require("./schemas/movies/schMovFetchImages.js");
+const schMovCast = require("./schemas/movies/schMovCast.js");
 
 // Import resolvers
 const resMovieDetails = require("./resolvers/movies/resMovDetails.js");
@@ -17,12 +19,16 @@ const resMovNowPlaying = require("./resolvers/movies/resMovNowPlaying.js");
 const resMovPopular = require("./resolvers/movies/resMovPopular.js");
 const resMovUpcoming = require("./resolvers/movies/resMovUpcoming.js");
 const resMovTopRated = require("./resolvers/movies/resMovTopRated.js");
+const resMovFetchImages = require("./resolvers/movies/resMovFetchImages.js");
+const resMovCast = require("./resolvers/movies/resMovCast.js");
 
 // Merge schemas and resolvers
 const typeDefs = mergeTypeDefs([
   schMovNowPlaying,
   schMovieDetails,
   schMovPopular,
+  schMovFetchImages,
+  schMovCast,
 ]);
 const resolvers = mergeResolvers([
   resMovNowPlaying,
@@ -30,6 +36,8 @@ const resolvers = mergeResolvers([
   resMovPopular,
   resMovUpcoming,
   resMovTopRated,
+  resMovFetchImages,
+  resMovCast,
 ]);
 
 // server actions

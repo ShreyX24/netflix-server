@@ -16,6 +16,7 @@ const fetchFromMovieApi = async (endpoint, params = {}) => {
     if (!response.ok) {
       throw new Error(`API request failed with status ${response.status}`);
     }
+    console.log(response);
     return await response.json();
   } catch (error) {
     throw new Error(`API request failed: ${error.message}`);
