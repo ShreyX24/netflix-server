@@ -40,28 +40,45 @@ const resolvers = mergeResolvers([
   resMovCast,
 ]);
 
+// Create Express app
+const app = express();
+
+// Middleware setup
+app.use(bodyParser.json());
+app.use(cors({
+  origin: '*', // Be cautious with this in production
+  methods: ['GET', 'POST', 'OPTIONS']
+}));
+
 // server actions
 async function startServer() {
-  const app = express();
-
+  
   // Create Apollo Server with combined schema and resolvers
   const server = new ApolloServer({
     typeDefs,
     resolvers,
   });
 
-  app.use(bodyParser.json());
-  app.use(cors());
-
   // Start Apollo server
   await server.start();
-  app.use("/graphql", expressMiddleware(server));
+
+  //post request to gql
+  app.use(
+    "/graphql",
+    cors(),
+    bodyParser.json(),
+    expressMiddleware(server, {
+      context: async ({ req }) => ({
+        // You can add any context you need here
+        headers: req.headers,
+      }),
+    })
+  );
 
   // Check if the server is sending messages properly
   app.get("/ping", (req, res) => res.send("Pong"));
 
   app.get("/", (req, res) => res.send("Server Running"));
-
 
   // Start server @ port 3001 or the defined port in environment variables
   const port = process.env.PORT || 3002;
